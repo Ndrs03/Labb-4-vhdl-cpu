@@ -12,19 +12,21 @@ ARCHITECTURE behave OF testbench IS
     SIGNAL ax, opcode : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
 BEGIN
-    clk <= not clk after 100 ns;
-    
+    clk <= NOT clk AFTER 100 ns;
+
     cpu : ENTITY work.cpu(behave) PORT MAP (ax, opcode, clk, update);
+
     PROCESS
+        VARIABLE ax_loop, opcode_loop : STD_LOGIC_VECTOR(3 DOWNTO 0) := (OTHERS => '0');
     BEGIN -- process
         update <= '1';
-        ax <= "0010";
-        opcode <= "0000";
-        WAIT FOR 200 ns;
-
-        ax <= "0011";
-        opcode <= "1011";
-        WAIT FOR 200 ns;
+        FOR ax_loop IN 0 TO 15 LOOP
+            ax <= conv_std_logic_vector(ax_loop, 4);
+            FOR opcode_loop IN 0 TO 15 LOOP
+                opcode <= conv_std_logic_vector(opcode_loop, 4);
+                WAIT FOR 200 ns;
+            END LOOP;
+        END LOOP;
 
     END PROCESS;
 END behave;

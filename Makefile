@@ -22,7 +22,7 @@ all:
 	@$(GHDL) -a $(FLAGS) $(INPUT_NAME_8).vhdl
 	@$(GHDL) -a $(FLAGS) $(TESTBENCH_INPUT_NAME).vhdl
 	@$(GHDL) -e $(FLAGS) $(TESTBENCH_ENTITY_NAME)
-	@$(GHDL) -r $(FLAGS) $(TESTBENCH_ENTITY_NAME) --stop-time=10us --wave=wave.ghw
+	@$(GHDL) -r $(FLAGS) $(TESTBENCH_ENTITY_NAME) --stop-time=60us --wave=wave.ghw
 
-wave:
+wave: # compile first
 	gtkwave wave.ghw
